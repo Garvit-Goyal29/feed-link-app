@@ -14,7 +14,7 @@ function Current() {
     }
     useEffect(() => {
         if (!user?.id) return;
-        fetch(`http://localhost:5000/api/donation?userId=${user.id}`)
+        fetch(`https://feed-link-app-1.onrender.com/api/donation?userId=${user.id}`)
             .then(res => res.json())
             .then(data => {
                 setDonations(data.data);
@@ -23,7 +23,7 @@ function Current() {
     }, [user?.id]);
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/donation/${id}`, {
+            const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/${id}`, {
                 method: "DELETE",
             });
 
