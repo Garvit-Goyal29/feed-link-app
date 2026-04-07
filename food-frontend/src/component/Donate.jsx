@@ -67,7 +67,7 @@ function Donate() {
                 return;
             }
             try {
-                const res = await fetch("http://localhost:5000/api/donation/donate", {
+                const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/donate", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
