@@ -15,7 +15,7 @@ function History() {
 
     const fetchHistory = () => {
         if (!user?.id) return;
-        fetch(`http://localhost:5000/api/donation/history?userId=${user.id}`)
+        fetch(`https://feed-link-app-1.onrender.com/api/donation/history?userId=${user.id}`)
             .then(res => res.json())
             .then(data => {
                 setDonations(data.data);
@@ -29,7 +29,7 @@ function History() {
 
     const markAsCompleted = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/donation/completeRequest`, {
+            const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/completeRequest`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
