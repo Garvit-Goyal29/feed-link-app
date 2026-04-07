@@ -19,7 +19,7 @@ function Receiver() {
         }
         if (!user) return;
         try {
-            fetch("http://localhost:5000/api/receiver")
+            fetch("https://feed-link-app-1.onrender.com/api/receiver")
                 .then(res => res.json())
                 .then(data => {
                     setFood(data.data);
