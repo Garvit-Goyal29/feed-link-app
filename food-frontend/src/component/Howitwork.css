@@ -1,0 +1,20 @@
+.title{
+    opacity: 0;
+    transform:translateY(-10vh);
+    transition: all 0.7s cubic-bezier(0.68,-0.6,0.32,1.6);
+    
+}
+.showT{
+    opacity: 1;
+    transform:translateY(0vh);
+}
+.scroll{
+    opacity: 0;
+    transform:translateY(-10vh);
+    transition: all 0.7s cubic-bezier(0.68,-0.6,0.32,1.6);
+    
+}
+.showS{
+    opacity: 1;
+    transform:translateY(0vh);
+}

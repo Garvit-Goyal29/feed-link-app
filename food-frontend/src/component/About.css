@@ -1,0 +1,56 @@
+.problem {
+    opacity: 0;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s ease;
+}
+
+.showP {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.provide {
+    opacity: 0;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s ease;
+}
+
+.showPro {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.heading{
+    opacity: 0;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s ease;
+}
+.showH{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.box{
+    opacity: 0;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s ease;
+}
+.showB{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.howitwork{
+    opacity: 0;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s ease;
+}
+.showHi{
+    opacity: 1;
+    transform: scale(1) translateY(-14vh);
+}
+.link{
+    opacity: 0;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s ease;
+}
+.showL{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
