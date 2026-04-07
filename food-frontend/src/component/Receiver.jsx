@@ -31,7 +31,7 @@ function Receiver() {
     }, [])
     async function handleRequest(id) {
         try {
-            const res = await fetch("http://localhost:5000/api/receiver/request", {
+            const res = await fetch("https://feed-link-app-1.onrender.com/api/receiver/request", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
