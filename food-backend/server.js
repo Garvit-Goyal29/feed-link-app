@@ -19,7 +19,9 @@ app.use(express.json());
 app.use("/api/auth", auth);
 app.use("/api/donation", donation);
 app.use("/api/receiver", Receiver);
-
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
 
 app.listen(PORT,()=>{
     console.log(`Server running on port ${PORT}`);
