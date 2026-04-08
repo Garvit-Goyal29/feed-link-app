@@ -4,20 +4,23 @@ dotenv.config();
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // Use SSL
+    port: 587,
+    secure: false, // Use TLS
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
+    tls: {
+        rejectUnauthorized: false // Often needed for cloud environments
+    }
 });
 
 // Verify connection configuration
 transporter.verify(function (error, success) {
     if (error) {
-        console.log("Mailer Error:", error);
+        console.error("Mailer Configuration Error:", error);
     } else {
-        console.log("Mailer is ready to take our messages");
+        console.log("Mailer is ready to send emails");
     }
 });
 
