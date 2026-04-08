@@ -19,6 +19,9 @@ app.use(express.json());
 app.use("/api/auth", auth);
 app.use("/api/donation", donation);
 app.use("/api/receiver", Receiver);
+app.get("/", (req, res) => {
+  res.status(200).send("Server is live ✅");
+});
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK" });
 });
