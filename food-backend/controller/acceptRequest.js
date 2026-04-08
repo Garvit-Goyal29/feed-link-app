@@ -41,6 +41,7 @@ async function acceptRequest(req, res) {
         const receiverEmail = request.userEmail;
         const receiverPhone = receiver ? receiver.phone : "N/A";
 
+        let emailSent = true;
         try {
             const receiverProps = {
                 receiverName,
@@ -75,12 +76,14 @@ async function acceptRequest(req, res) {
                 html: donorConfirmationTemplate(donorProps)
             });
         } catch (emailErr) {
-            console.log("Email sending failed:", emailErr);
+            console.error("Email sending failed:", emailErr);
+            emailSent = false;
         }
 
         res.status(200).json({
             success: true,
-            message: "Request accepted & emails sent"
+            message: emailSent ? "Request accepted & emails sent" : "Request accepted, but email delivery failed. Check server logs.",
+            emailStatus: emailSent ? "sent" : "failed"
         });
     } catch (err) {
         console.log(err);
