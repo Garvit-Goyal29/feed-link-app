@@ -217,7 +217,7 @@ function About() {
                             // whileHover={{
                             //     borderRight: "0.2vw solid #1e1e1e"
                             // }}
-                            className="font-semibold font-[jost] text-5xl flex justify-center items-center" href="http://localhost:5173/howitwork"
+                            className="font-semibold font-[jost] text-5xl flex justify-center items-center" href="https://feed-link-two.vercel.app/howitwork"
                         ><motion.p
                             whileHover={{
                                 marginRight: "2.6vw",
