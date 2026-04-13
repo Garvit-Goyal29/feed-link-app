@@ -5,6 +5,7 @@ import { useState } from "react";
 import History from './History';
 import Request from './Request';
 import Current from './Current';
+import Loader from './Loader'
 import './Donate.css'
 function Donate() {
     const { ref: donationRef, inView: donationVisible } = useInView({
@@ -24,6 +25,7 @@ function Donate() {
         user = null;
     }
     const today = new Date().toLocaleDateString();
+    const [loader,setloader] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -67,6 +69,7 @@ function Donate() {
                 return;
             }
             try {
+                setloader(true)
                 const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/donate", {
                     method: "POST",
                     headers: {
@@ -76,10 +79,12 @@ function Donate() {
                 })
                 const data = await res.json()
                 if (data.success) {
+                    setloader(false)
                     alert("Donation added successfully ✅")
                     resetForm();
                     window.location.href = "/donate/current"
                 } else {
+                    setloader(false)
                     alert(data.message || "Something went wrong ❌");
                 }
             } catch (error) {
@@ -177,7 +182,7 @@ function Donate() {
                                 className="w-[94%] bg-orange-500 hover:bg-orange-600 py-3 rounded-xl font-semibold transition duration-300 hover:scale-[1.01]"
 
                             >
-                                Submit Donation
+                                {loader?(<Loader/>):"Submit Donation"}
                             </button>
                             <button
                                 onClick={resetForm}

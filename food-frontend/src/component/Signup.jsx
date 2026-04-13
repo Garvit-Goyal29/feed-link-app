@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import signImg from '../assets/signupimg.png'
+import Loader from "./Loader";
 import './Signup.css'
 function Signup() {
     const { ref: refsignup, inView: signupVisiblep } = useInView({
@@ -13,6 +14,7 @@ function Signup() {
     const [phone, setPhone] = useState("");
     const [password, setPass] = useState("");
     const [cpassword, setCpass] = useState("");
+    const [loader, setloader] = useState(false);
     const handleNewUserRegistration = async (e) => {
         e.preventDefault();
 
@@ -45,6 +47,7 @@ function Signup() {
         }
 
         try {
+            setloader(true)
             const res = await fetch("https://feed-link-app-1.onrender.com/api/auth/signup", {
                 method: "POST",
                 headers: {
@@ -61,9 +64,11 @@ function Signup() {
             const data = await res.json();
 
             if (data.success) {
+                setloader(false)
                 alert("Signup Successful ✅");
                 window.location.href = "/signin";
             } else {
+                setloader(false)
                 alert(data.message);
             }
 
@@ -73,7 +78,7 @@ function Signup() {
     };
     return (
         <>
-            <div className="h-[90vh] mt-[10vh] w-full bg-[#E0E0E0] flex flex-col items-center justify-center">
+            <div className="min-h-[91vh] mt-[10vh] w-full bg-[#E0E0E0] flex flex-col items-center justify-center">
                 <div ref={refsignup} className={`signup ${signupVisiblep ? "showSu" : ""} bg-white h-[80vh] w-[68vw] rounded-[2vh] flex items-center justify-center p-2 shadow-gray-500 shadow-2xl`}>
                     <div className='w-[64%] h-full flex flex-col items-center justify-evenly p-2'>
                         <div className='flex flex-col items-center justify-center'>
@@ -122,7 +127,7 @@ function Signup() {
                                 className="h-[6vh] w-[80%] border border-[#BEBEC2] rounded-[1vh] pl-4"
                             />
                             <button type="submit"
-                                className='flex items-center justify-center h-[6vh] w-[80%] bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>Sign up</button>
+                                className='flex items-center justify-center h-[6vh] w-[80%] bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>{loader?(<Loader/>):("Signup")}</button>
                         </form>
                         <div>
                             <p className='text-[2vh] text-[#6E6D7E]'>Already have an account? <Link to="/signin" className='text-orange-400 font-semibold'>Sign in</Link></p>

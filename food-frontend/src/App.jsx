@@ -8,7 +8,7 @@ import Signin from './component/Signin.jsx'
 import Signup from './component/Signup.jsx'
 import ScrollToTop from './component/ScrollToTop.jsx'
 import Donate from './component/Donate.jsx'
-import Receiver from './component/Receiver.jsx'
+import Receive from './component/Receive.jsx'
 function App() {
   return (
     <>
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/donate/*" element={<Donate />} />
-          <Route path="/receiver" element={<Receiver />} />
+          <Route path="/receive" element={<Receive />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About />} />
           <Route path="/howitwork" element={<Howitwork />} />

@@ -83,7 +83,7 @@ function Request() {
                             <p className="text-sm text-gray-400">
                                 {req.description}
                             </p>
-                            <div className="flex bg-[#353535] w-[50%] justify-evenly items-center">
+                            <div className="flex bg-[#353535] w-[50%] rounded justify-evenly items-center">
                                 <CheckCircleIcon
                                     onClick={() => acceptRequest(req._id)}
                                     className="w-6 h-6 text-green-500 cursor-pointer" />

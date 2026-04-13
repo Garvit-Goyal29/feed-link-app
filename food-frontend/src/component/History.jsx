@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-
+import Loader from "./Loader";
 function History() {
     const [donations, setDonations] = useState([]);
+    const [loader, setloader] = useState(false);
     const rawData = localStorage.getItem("userActive");
     let user = null;
     try {
@@ -15,9 +16,11 @@ function History() {
 
     const fetchHistory = () => {
         if (!user?.id) return;
+        setloader(true)
         fetch(`https://feed-link-app-1.onrender.com/api/donation/history?userId=${user.id}`)
             .then(res => res.json())
             .then(data => {
+                setloader(false)
                 setDonations(data.data);
             })
             .catch(err => console.log(err));
@@ -29,6 +32,7 @@ function History() {
 
     const markAsCompleted = async (id) => {
         try {
+            setloader(true)
             const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/completeRequest`, {
                 method: "POST",
                 headers: {
@@ -39,15 +43,18 @@ function History() {
 
             const data = await res.json();
             if (data.success) {
+                setloader(false)
                 alert("Donation completed! ✅");
                 setDonations(prev =>
                     prev.map(d => d._id === id ? { ...d, status: 'completed' } : d)
                 );
             } else {
+                setloader(false)
                 alert(data.message || "Failed to mark as completed");
             }
 
         } catch (err) {
+            setloader(false)
             console.log(err);
             alert("Error updating status");
         }
@@ -64,7 +71,7 @@ function History() {
 
     return (
         <div className="flex justify-between items-start gap-4 p-4 flex-wrap">
-            {donations.length === 0 ? (
+            {loader?<Loader/>:donations.length === 0 ? (
                 <p className="text-gray-400 text-center w-full">No history available yet!</p>
             ) : (
                 donations.map((donation) => (

@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import logo from '../assets/logo.png'
-import { useInView } from "react-intersection-observer";
 import { motion, useScroll } from 'motion/react'
 import AfterSignIn from '../component/AfterSignIn.jsx'
 import './Navbar.css'
@@ -29,11 +28,11 @@ function Navbar() {
                     className='h-[0.7vh] bg-orange-400 w-screen origin-left fixed left-0 top-0 z-51'>
                 </motion.div>
             </div>
-            <div className="mt-[0.7vh] fixed top-0 left-0 w-full h-[9.3vh] shadow-xl z-50 bg-white flex justify-evenly items-center">
-                <NavLink to="/" className="w-1/3 flex justify-evenly items-center">
+            <div className="mt-[0.7vh] fixed top-0 left-0 w-full h-[9.3vh] shadow-xl z-50 bg-white flex justify-evenly items-center gap-[2vw] px-[1vw]">
+                <NavLink to="/" className="w-1/4 flex justify-evenly items-center">
                     <img className="w-15 h-13" src={logo} alt="" />
                 </NavLink>
-                <div className="w-1/3 flex justify-between items-center">
+                <div className="w-2/4 flex justify-between items-center">
                     <NavLink to="/" className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                         Home
                     </NavLink>
@@ -43,15 +42,21 @@ function Navbar() {
                     <NavLink to="/about" className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                         About
                     </NavLink>
+                    <NavLink to="/donate/current" className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        Donate
+                    </NavLink>
+                    <NavLink to="/receive" className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        Receive
+                    </NavLink>
                 </div>
                 {obj ? (
                     <AfterSignIn user={obj} />
                 ) : (
-                    <div className="w-1/3 flex items-center justify-center">
+                    <div className="w-0.5/4 flex items-center justify-center gap-[0.5vw] border-orange-400 border-2 p-1 rounded-[1vh]">
                         <NavLink
                             to="/signin"
                             className={({ isActive }) =>
-                                `${isActive ? "text-orange-400" : "text-black"} text-md w-25 text-center duration-200`
+                                `${isActive ? "bg-orange-400 text-white" : "text-orange-400 bg-white"} w-25 text-center text-md p-1 rounded-[1vh] duration-200`
                             }
                         >
                             Sign in
@@ -60,7 +65,7 @@ function Navbar() {
                         <NavLink
                             to="/signup"
                             className={({ isActive }) =>
-                                `${isActive ? "bg-orange-400 text-white" : "text-orange-400 bg-white"} w-25 text-center text-md border-orange-400 border-2 p-2 rounded-xl duration-200`
+                                `${isActive ? "bg-orange-400 text-white" : "text-orange-400 bg-white"} w-25 text-center text-md p-1 rounded-[1vh] duration-200`
                             }
                         >
                             Sign up

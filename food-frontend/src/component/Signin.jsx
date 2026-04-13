@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import logo from '../assets/logo.png'
 import sigin from '../assets/signin.png'
+import Loader from "./Loader";
 import './Signin.css'
 function Signin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loader, setLoader] = useState(false);
     const handleExistUser = async (e) => {
         e.preventDefault()
         if (!email) {
@@ -18,6 +20,7 @@ function Signin() {
             return
         }
         try {
+            setLoader(true)
             const res = await fetch("https://feed-link-app-1.onrender.com/api/auth/signin", {
                 method: "POST",
                 headers: {
@@ -30,9 +33,11 @@ function Signin() {
             })
             const data = await res.json()
             if (data.success) {
+                setLoader(false)
                 localStorage.setItem("userActive", JSON.stringify(data));
                 window.location.href = "/";
             } else {
+                setLoader(false)
                 alert(data.message);
             }
         } catch (error) {
@@ -44,7 +49,7 @@ function Signin() {
     })
     return (
         <>
-            <div className="bg-[#E0E0E0] mt-[10vh] flex flex-col items-center justify-center min-h-[90vh]">
+            <div className="bg-[#E0E0E0] mt-[10vh] flex flex-col items-center justify-center min-h-[91vh]">
                 <div ref={refsignin} className={`signin ${SigninVisible ? "showSi" : ""} bg-white h-[80vh] w-[68vw] rounded-[2vh] flex items-center justify-between p-2 shadow-2xl`}>
 
                     <div className="h-full w-[50%] p-10 flex flex-col items-center justify-between">
@@ -79,7 +84,7 @@ function Signin() {
                             <button
                                 type="submit"
                                 className="bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 text-white text-sm p-2 rounded w-full transition duration-300 flex items-center justify-center"
-                            >Sign In
+                            >{loader ? (<Loader />) : ("Signin")}
                             </button>
                         </form>
 

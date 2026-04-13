@@ -1,9 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Loader from "./Loader";
 function Receiver() {
     const [food, setFood] = useState([])
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
+    const [loader, setloader] = useState(false);
     useEffect(() => {
         const rawData = localStorage.getItem("userActive")
         let user = null;
@@ -19,18 +21,22 @@ function Receiver() {
         }
         if (!user) return;
         try {
+            setloader(true)
             fetch("https://feed-link-app-1.onrender.com/api/receiver")
                 .then(res => res.json())
                 .then(data => {
+                    setloader(false)
                     setFood(data.data);
                     console.log(data)
                 }).catch(err => console.log(err));
         } catch (err) {
+            setloader(false)
             console.log(err)
         }
     }, [])
     async function handleRequest(id) {
         try {
+            // setloader(true);
             const res = await fetch("https://feed-link-app-1.onrender.com/api/receiver/request", {
                 method: "POST",
                 headers: {
@@ -44,7 +50,7 @@ function Receiver() {
             });
             const data = await res.json();
             if (data.success) {
-                console.log(data.data)
+                // setloader(false)
                 setFood(prev =>
                     prev.map(item =>
                         item._id === id ? { ...item, status: "requested" } : item
@@ -52,18 +58,19 @@ function Receiver() {
                 );
             }
         } catch (err) {
+            // setloader(false)
             console.log("receiver request pe : " + err + " hai");
         }
     }
     return (
         <>
-            <div className="mt-[10vh] flex justify-center items-center flex-col">
+            <div className="mt-[10vh] min-h-[91vh] flex justify-start items-center flex-col">
                 <h1 className="p-[2vh] text-2xl font-[jost]">All available food!</h1>
                 <h1>Total {food.length} are available</h1>
-                <div className="w-[90vw] min-h-screen border rounded-xl bg-[#1e1e1e] p-[2vh] flex flex-wrap gap-[2vw]">
-                    {food.length === 0 ? (
+                <div className="w-[90vw] h-full border rounded-xl bg-[#1e1e1e] flex flex-wrap justify-center items-center gap-[2vw] py-[2vh]">
+                    {loader ? (<Loader size="9.2vh" bor="1vh" />) : (food.length === 0 ? (
                         <>
-                            <h1 className="p-[2vh] text-2xl text-white font-[jost]">Not available! or sign-in/sign-up</h1>
+                            <h1 className="p-[2vh] text-2xl text-center text-white font-[jost]">Not available! or sign-in/sign-up</h1>
                         </>
                     )
                         :
@@ -90,7 +97,7 @@ function Receiver() {
                                     </button>
                                 </div>
                             ))
-                        )}
+                        ))}
                 </div>
             </div>
         </>

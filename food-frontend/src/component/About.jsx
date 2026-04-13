@@ -265,7 +265,7 @@ function About() {
                             }}
                             className="w-[14vw] p-0.5 rounded-2xl bg-linear-to-r from-[#1e1e1e] to-orange-400 flex items-center justify-center">
                             <MotionLink
-                                to="/receiver"
+                                to="/receive"
                                 className="block w-[15vw] bg-[#1e1e1e] px-6 py-2 text-white rounded-2xl"
                             >Explore Listings</MotionLink>
                         </motion.div>

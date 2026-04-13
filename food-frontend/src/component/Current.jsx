@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { TrashIcon } from '@heroicons/react/24/outline'
+import Loader from './Loader.jsx'
 function Current() {
     const [donations, setDonations] = useState([]);
+    const [loader, setloader] = useState(false);
     const rawData = localStorage.getItem("userActive");
     let user = null;
     try {
@@ -14,15 +16,18 @@ function Current() {
     }
     useEffect(() => {
         if (!user?.id) return;
+        setloader(true);
         fetch(`https://feed-link-app-1.onrender.com/api/donation?userId=${user.id}`)
             .then(res => res.json())
             .then(data => {
+                setloader(false)
                 setDonations(data.data);
             })
             .catch(err => console.log(err));
     }, [user?.id]);
     const handleDelete = async (id) => {
         try {
+            setloader(true)
             const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/${id}`, {
                 method: "DELETE",
             });
@@ -30,20 +35,23 @@ function Current() {
             const data = await res.json();
 
             if (data.success) {
+                setloader(false)
                 alert("Deleted successfully 🗑️");
                 setDonations(prev => prev.filter(d => d._id !== id));
             } else {
+                setloader(false)
                 alert(data.message || "Delete failed");
             }
 
         } catch (error) {
+            setloader(false)
             console.log(error);
             alert("Server error");
         }
     }
     return (
         <div className="flex justify-between items-center gap-4 p-4 flex-wrap">
-            {donations.length === 0 ? (
+            {loader ? <Loader /> : donations.length === 0 ? (
                 <p className="text-gray-400 text-center w-full">No donation list by you yet! <br />Tap on up button to list excess food.</p>
             ) : (
                 donations.map((donation) => (

@@ -78,7 +78,7 @@ function Home() {
                             <img src={rImg} alt="" className='h-[22vh] w-[25vw] rounded' />
                             <h2 className='text-[#F9A825] text-xl font-[Roboto]'>Receive food</h2>
                             <p className='text-sm'>Looking for food assistance?<br />Browse available donations near you.</p>
-                            <NavLink to="/receiver" className='bg-[#f9a825] font-[Jost] w-[13vw] flex justify-center items-center p-1 pl-2 gap-1 rounded hover:bg-black hover:text-white duration-300'>Find Food <ArrowRightIcon className='h-5 w-5' /></NavLink>
+                            <NavLink to="/receive" className='bg-[#f9a825] font-[Jost] w-[13vw] flex justify-center items-center p-1 pl-2 gap-1 rounded hover:bg-black hover:text-white duration-300'>Find Food <ArrowRightIcon className='h-5 w-5' /></NavLink>
                         </div>
                     </div>
                 </div>
