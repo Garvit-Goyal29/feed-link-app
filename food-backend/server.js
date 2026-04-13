@@ -5,6 +5,7 @@ import connectDB from "./dbConfig.js";
 import auth from './routes/auth.js'
 import donation from "./routes/donation.js";
 import Receiver from "./routes/receiver.js";
+import home from './routes/home.js';
 dotenv.config();
 
 const app = express()
@@ -19,6 +20,8 @@ app.use(express.json());
 app.use("/api/auth", auth);
 app.use("/api/donation", donation);
 app.use("/api/receiver", Receiver);
+app.use("/api", home);
+
 app.get("/", (req, res) => {
   res.send("Working ✅");
 });

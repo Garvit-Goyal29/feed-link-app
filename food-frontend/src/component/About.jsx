@@ -214,9 +214,6 @@ function About() {
                         className={`howitwork ${HowitworkVisible ? "showHi" : ""} w-[32vw] mt-30 mb-10 flex justify-start items-center`}
                     >
                         <motion.a
-                            // whileHover={{
-                            //     borderRight: "0.2vw solid #1e1e1e"
-                            // }}
                             className="font-semibold font-[jost] text-5xl flex justify-center items-center" href="https://feed-link-two.vercel.app/howitwork"
                         ><motion.p
                             whileHover={{

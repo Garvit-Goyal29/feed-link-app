@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { data, NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import bgURL from '../assets/bgfood.png'
 import logo from '../assets/logo.png'
@@ -19,6 +20,14 @@ function Home() {
         triggerOnce: true
     })
     const SyP = useScroll().scrollYProgress
+    const [meal, setmeal] = useState(0)
+    useEffect(() => {
+        fetch('https://feed-link-app-1.onrender.com/api/getMeal')
+            .then(res => res.json())
+            .then(data => {
+                setmeal(data.data)
+            })
+    })
     return (
         <>
             <div className='max-w-screen mt-[10vh]'>
@@ -38,7 +47,7 @@ function Home() {
                             className='absolute inset-0 origin-left bg-orange-400 rounded-r-4xl'
                         />
                         <h1 className='relative z-10 text-[#FDE6D6] text-md font-[Jost] text-start'>
-                            1200+ <br /> Meals
+                            {meal}+ <br /> Meals
                         </h1>
                     </div>
                     <div className="relative w-[10vw] h-[9vh] pl-[0.3vw] flex justify-start items-center overflow-hidden">
