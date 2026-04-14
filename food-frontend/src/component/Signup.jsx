@@ -127,7 +127,7 @@ function Signup() {
                                 className="h-10 w-full lg:w-[80%]  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
                             <button type="submit"
-                                className='flex items-center justify-center h-[6vh] lg:w-[80%] w-full bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>{loader?(<Loader/>):("Signup")}</button>
+                                className='flex items-center justify-center h-10 lg:w-[80%] w-full bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>{loader?(<Loader/>):("Signup")}</button>
                         </form>
                         <div>
                             <p className='text-xs text-[#6E6D7E]'>Already have an account? <Link to="/signin" className='text-orange-400 font-semibold'>Sign in</Link></p>

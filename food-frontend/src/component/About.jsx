@@ -29,8 +29,8 @@ function About() {
             <div className='mt-[10vh]'>
                 <div className='h-full w-full flex flex-col justify-evenly items-center'>
                     <div ref={refHeading} className={`heading ${HeadingVisible ? "showH" : ""} flex flex-col justify-center items-center h-[30%] mb-20 mt-10`}>
-                        <h1 className="text-4xl font-[jost] text-center text-orange-400">“Reducing Food Waste, Feeding Lives”</h1>
-                        <p className="text-[#4a5565] text-center text-md font-[roboto]">A platform that connects excess food with those who need it most.</p>
+                        <h1 className="lg:text-4xl text-2xl font-[jost] text-center text-orange-400">“Reducing Food Waste, Feeding Lives”</h1>
+                        <p className="text-[#4a5565] text-center lg:text-md text-xs font-[roboto]">A platform that connects excess food with those who need it most.</p>
                         <MotionLink
                             whileHover={{
                                 scale: 1.05,
@@ -44,7 +44,7 @@ function About() {
                                 type: "spring",
                                 stiffness: 300
                             }}
-                            className="w-[15vw] mt-[5vh] text-center font-semibold text-white bg-orange-400 p-2 rounded-3xl" to="/">Join Us</MotionLink>
+                            className="lg:w-[15vw] w-[30vw] mt-[5vh] text-center font-semibold text-white bg-orange-400 p-2 rounded-3xl" to="/">Join Us</MotionLink>
                     </div>
                     <div ref={refBox} className={`box ${BoxVisible ? "showB" : ""} w-[90vw] h-[30vh] mb-15 rounded-2xl hover:border-2 hover:border-dashed transition duration-500`}>
                         <div className="w-[90vw] h-full bg-[#1e1e1e] border-black border-2 p-5 rounded-2xl hover:-translate-y-2 hover:-translate-x-3 hover:bg-[#353535] transition duration-300">
@@ -56,7 +56,7 @@ function About() {
                         </div>
                     </div>
                     <div ref={refProblem} className={`problem ${ProblemVisible ? "showP" : ""} h-full flex flex-col justify-evenly items-center mb-10`}>
-                        <section className="w-[90vw] bg-[#1e1e1e] rounded-2xl text-white py-16 px-6 md:px-20">
+                        <section className="w-[90vw] bg-[#1e1e1e] lg:h-full rounded-2xl text-white py-16 px-6 md:px-20">
                             {/* Heading */}
                             <h2 className="text-4xl font-bold text-center text-orange-400 mb-12">
                                 Problem We Face
@@ -211,10 +211,10 @@ function About() {
                         </div>
                     </div>
                     <div ref={refHowitwork}
-                        className={`howitwork ${HowitworkVisible ? "showHi" : ""} w-[32vw] mt-30 mb-10 flex justify-start items-center`}
+                        className={`howitwork ${HowitworkVisible ? "showHi" : ""} lg:w-[32vw] w-[50vw] mt-30 mb-10 flex justify-start items-center`}
                     >
                         <motion.a
-                            className="font-semibold font-[jost] text-5xl flex justify-center items-center" href="https://feed-link-two.vercel.app/howitwork"
+                            className="font-semibold font-[jost] lg:text-5xl text-2xl flex justify-center items-center" href="https://feed-link-two.vercel.app/howitwork"
                         ><motion.p
                             whileHover={{
                                 marginRight: "2.6vw",
@@ -242,10 +242,10 @@ function About() {
                                 type: "spring",
                                 stiffness: 300
                             }}
-                            className="flex items-center justify-center w-[14vw] p-0.5 rounded-2xl bg-linear-to-r from-orange-400 to-[#1e1e1e] overflow-hidden">
+                            className="flex items-center justify-center lg:w-[14vw] w-[40vw] p-0.5 rounded-2xl bg-linear-to-r from-orange-400 to-[#1e1e1e] overflow-hidden">
                             <MotionLink
                                 to="/donate/current"
-                                className="block w-[15vw] bg-[#1e1e1e] px-6 py-2 text-white rounded-2xl"
+                                className="block lg:w-[15vw] w-[40vw] bg-[#1e1e1e] px-6 py-2 text-white rounded-2xl"
                             >Donate Food</MotionLink>
                         </motion.div>
                         <motion.div
@@ -260,24 +260,24 @@ function About() {
                                 type: "spring",
                                 stiffness: 300
                             }}
-                            className="w-[14vw] p-0.5 rounded-2xl bg-linear-to-r from-[#1e1e1e] to-orange-400 flex items-center justify-center">
+                            className="lg:w-[14vw] w-[40vw] p-0.5 rounded-2xl bg-linear-to-r from-[#1e1e1e] to-orange-400 flex items-center justify-center">
                             <MotionLink
                                 to="/receive"
-                                className="block w-[15vw] bg-[#1e1e1e] px-6 py-2 text-white rounded-2xl"
+                                className="block lg:w-[15vw] w-[40vw] bg-[#1e1e1e] px-6 py-2 text-white rounded-2xl"
                             >Explore Listings</MotionLink>
                         </motion.div>
                     </div>
 
                     {/* about */}
-                    <div className="h-[42vh] w-full py-[1vh] bg-[#1e1e1e] text-white">
+                    <div className="lg:h-[42vh] h-full w-full py-[1vh] bg-[#1e1e1e] text-white">
                         <h2 className="text-sm h-[5vh] mb-[1vh] text-[#7e8084] border-b border-[#7e8084] text-center">Learn • Build • Improve</h2>
-                        <div className="flex justify-evenly items-center w-full">
-                            <div className="w-[30%] h-[35vh] flex flex-col justify-start items-center">
-                                <h1 className="text-2xl  text-orange-400 font-semibold font-[Jost] mb-[2vh]">About us</h1>
+                        <div className="flex justify-evenly items-center flex-col lg:flex-row w-full">
+                            <div className="lg:w-[30%] w-full lg:h-[35vh] h-full flex flex-col justify-start items-center lg:px-0 px-[2vh] lg:mb-0 mb-[2vh]">
+                                <h1 className="text-2xl  text-orange-400 font-semibold font-[Jost] lg:mb-[2vh] mb-0">About us</h1>
                                 <p className="text-start">Built by Garvit & Goutam, BTech students passionate about solving real-world problems using technology.</p>
                             </div>
-                            <div className="w-[30%] h-[35vh] flex flex-col justify-start items-center">
-                                <h1 className="text-2xl text-orange-400 font-semibold font-[Jost] mb-[2vh]">Tech Stack</h1>
+                            <div className="lg:w-[30%] w-full lg:h-[35vh] h-full flex flex-col justify-start items-center mb-[2vh] lg:mb-0">
+                                <h1 className="text-2xl text-orange-400 font-semibold font-[Jost] lg:mb-[2vh] mb-0">Tech Stack</h1>
                                 <div className="flex flex-col justify-center items-start">
                                     <p>Frontend : <a className="text-orange-300 hover:text-orange-400" href="https://react.dev/">React.js</a></p>
                                     <p>Backend : <a className="text-orange-300 hover:text-orange-400" href="https://nodejs.org/en">Node.js</a></p>
@@ -286,12 +286,12 @@ function About() {
                                     <p>Animation : <a className="text-orange-300 hover:text-orange-400" href="https://motion.dev/">Motion</a></p>
                                 </div>
                             </div>
-                            <div className="w-[30%] h-[35vh] flex flex-col justify-start items-center">
-                                <h1 className="text-2xl text-orange-400 font-semibold font-[Jost] mb-[2vh]">Contact</h1>
+                            <div className="lg:w-[30%] w-full lg:h-[35vh] h-full flex flex-col justify-start items-center mb-[2vh] lg:mb-0">
+                                <h1 className="text-2xl text-orange-400 font-semibold font-[Jost] lg:mb-[2vh] mb-0">Contact</h1>
                                 <div className="flex flex-col justify-center items-start">
-                                    <p>Email: <a className="text-orange-300 hover:text-orange-400">garvitgoyal29557@gmail.com</a>
+                                    <p>Email: <a className="text-orange-300 lg:text-sm text-[4vw] hover:text-orange-400">garvitgoyal29557@gmail.com</a>
                                     </p>
-                                    <p>Email: <a className=" text-orange-300 hover:text-orange-400">goutamdethliya1@gmail.com</a>
+                                    <p>Email: <a className=" text-orange-300 lg:text-sm text-[4vw] hover:text-orange-400">goutamdethliya1@gmail.com</a>
                                     </p>
                                 </div>
                             </div>

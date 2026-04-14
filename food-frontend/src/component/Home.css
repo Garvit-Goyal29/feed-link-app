@@ -3,6 +3,9 @@
     overflow: hidden;
     white-space: nowrap;
     opacity: 0;
+    
+    max-width: 100%;   /* 🔥 important */
+
     animation:
         typing 10s steps(40) 2s infinite forwards,
         blink 0.7s 2s infinite,
