@@ -25,9 +25,10 @@ function Home() {
         fetch('https://feed-link-app-1.onrender.com/api/getMeal')
             .then(res => res.json())
             .then(data => {
+                console.log(data.data)
                 setmeal(data.data)
             })
-    })
+    },meal)
     return (
         <>
             <div className='max-w-screen mt-[10vh]'>

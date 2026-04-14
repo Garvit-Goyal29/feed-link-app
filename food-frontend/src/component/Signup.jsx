@@ -79,20 +79,20 @@ function Signup() {
     return (
         <>
             <div className="min-h-[91vh] mt-[10vh] w-full bg-[#E0E0E0] flex flex-col items-center justify-center">
-                <div ref={refsignup} className={`signup ${signupVisiblep ? "showSu" : ""} bg-white h-[80vh] w-[68vw] rounded-[2vh] flex items-center justify-center p-2 shadow-gray-500 shadow-2xl`}>
-                    <div className='w-[64%] h-full flex flex-col items-center justify-evenly p-2'>
-                        <div className='flex flex-col items-center justify-center'>
-                            <h1 className='font-bold text-3xl text-[#1e1e1e]'>Create your account</h1>
-                            <p className='text-orange-400 text-[5vh] font-semibold'>FeedLink</p>
+                <div ref={refsignup} className={`signup ${signupVisiblep ? "showSu" : ""} bg-white lg:h-[80vh] h-full w-[68vw] rounded-[2vh] flex items-center justify-center lg:p-2 p-4 shadow-gray-500 shadow-2xl`}>
+                    <div className='lg:w-[64%] w-full h-full flex flex-col items-center justify-evenly p-2'>
+                        <div className='flex flex-col items-center justify-center mb-2'>
+                            <h1 className='font-bold lg:text-3xl md:text-2xl text-md text-[#1e1e1e]'>Create your account</h1>
+                            <p className='text-orange-400 lg:text-3xl md:text-2xl text-xl font-semibold'>FeedLink</p>
                         </div>
                         <form onSubmit={handleNewUserRegistration}
-                            className='flex w-full flex-col justify-center items-center gap-6'>
+                            className='flex w-full h-full flex-col justify-center items-center gap-6'>
                             <input
                                 type="text"
                                 placeholder="Full Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="h-[6vh] w-[80%] border border-[#BEBEC2] rounded-[1vh] pl-4"
+                                className="lg:h-[6vh] h-[4vh] lg:w-[80%] w-full border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -100,7 +100,7 @@ function Signup() {
                                 placeholder="Email Address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="h-[6vh] w-[80%] border border-[#BEBEC2] rounded-[1vh] pl-4"
+                                className="lg:h-[6vh] h-[4vh] lg:w-[80%] w-full border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -108,7 +108,7 @@ function Signup() {
                                 placeholder="Phone Number (10 digits)"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
-                                className="h-[6vh] w-[80%] border border-[#BEBEC2] rounded-[1vh] pl-4"
+                                className="lg:h-[6vh] h-[4vh] lg:w-[80%] w-full border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -116,7 +116,7 @@ function Signup() {
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPass(e.target.value)}
-                                className="h-[6vh] w-[80%] border border-[#BEBEC2] rounded-[1vh] pl-4"
+                                className="lg:h-[6vh] h-[4vh] lg:w-[80%] w-full  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -124,16 +124,16 @@ function Signup() {
                                 placeholder="Confirm Password"
                                 value={cpassword}
                                 onChange={(e) => setCpass(e.target.value)}
-                                className="h-[6vh] w-[80%] border border-[#BEBEC2] rounded-[1vh] pl-4"
+                                className="lg:h-[6vh] h-[4vh] lg:w-[80%] w-full  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
                             <button type="submit"
-                                className='flex items-center justify-center h-[6vh] w-[80%] bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>{loader?(<Loader/>):("Signup")}</button>
+                                className='flex items-center justify-center h-[6vh] lg:w-[80%] w-full bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>{loader?(<Loader/>):("Signup")}</button>
                         </form>
                         <div>
                             <p className='text-[2vh] text-[#6E6D7E]'>Already have an account? <Link to="/signin" className='text-orange-400 font-semibold'>Sign in</Link></p>
                         </div>
                     </div>
-                    <img className='w-[40%] h-full rounded-[1vh] border-orange-300 border-2' src={signImg} alt="" />
+                    <img className='w-[40%] h-full hidden lg:block rounded-[1vh] border-orange-300 border-2' src={signImg} alt="" />
                 </div>
             </div>
         </>
