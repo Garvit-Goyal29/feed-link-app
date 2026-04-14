@@ -80,12 +80,10 @@ function Home() {
                         <p className='text-center text-[#6D4C41] font-[Jost]'>Donate surplus food or receive meal with dignity. Together <br /> we can reduce food waste and fight hunger</p>
                         <h2 className='text-orange-400 lg:text-[1.8vw] text-xl font-[Roboto] italic font-semibold'>Be the reason someone eat today.</h2>
                     </div>
-                    <div className='h-[60%] w-full flex flex-col lg:flex-row justify-center items-center gap-7'>
-
-                        {/* CARD 1 */}
+                    <div className='h-[60%] w-full flex flex-col lg:flex-row justify-center items-center gap-7 py-8 lg:py-0'>
                         <div
                             ref={section}
-                            className={`card ${sectionVisible ? "show" : ""} p-3 bg-white w-[90%] lg:w-76 h-auto lg:h-72 border-t-5 border-orange-400 rounded flex flex-col justify-between items-start shadow-2xl`}
+                            className={`card ${sectionVisible ? "show" : ""} p-3 bg-white w-[80%] lg:w-76 h-auto lg:h-72 border-t-5 border-orange-400 rounded flex flex-col justify-between items-start shadow-2xl`}
                         >
                             <img
                                 src={dImg}
@@ -105,10 +103,9 @@ function Home() {
                                 List Food Now <ArrowRightIcon className="w-5 h-5" />
                             </NavLink>
                         </div>
-                        {/* CARD 2 */}
                         <div
                             ref={section}
-                            className={`card ${sectionVisible ? "show" : ""} p-3 bg-white w-[90%] lg:w-76 h-auto lg:h-72 border-t-5 border-[#F9A825] rounded flex flex-col justify-between items-start shadow-2xl`}
+                            className={`card ${sectionVisible ? "show" : ""} p-3 bg-white  w-[80%] lg:w-76 h-auto lg:h-72 border-t-5 border-[#F9A825] rounded flex flex-col justify-between items-start shadow-2xl`}
                         >
                             <img
                                 src={rImg}
