@@ -7,7 +7,6 @@ function Navbar() {
     const ScrollYAxisProgress = useScroll().scrollYProgress;
     const data = localStorage.getItem("userActive")
     let obj = null;
-
     try {
         if (data && data !== "undefined") {
             obj = JSON.parse(data);
@@ -16,8 +15,6 @@ function Navbar() {
         console.log("Invalid user data in localStorage");
         obj = null;
     }
-
-
     return (
         <>
             <div className='h-[0.7vh] bg-orange-200 w-full fixed left-0 top-0 z-51'>
@@ -72,7 +69,6 @@ function Navbar() {
                         </NavLink>
                     </div>
                 )}
-
             </div >
         </>
     )

@@ -86,13 +86,13 @@ function Signup() {
                             <p className='text-orange-400 lg:text-3xl md:text-2xl text-xl font-semibold'>FeedLink</p>
                         </div>
                         <form onSubmit={handleNewUserRegistration}
-                            className='flex w-full h-full flex-col justify-center items-center gap-6'>
+                            className='flex w-full h-full flex-col justify-center items-center gap-6 mb-3'>
                             <input
                                 type="text"
                                 placeholder="Full Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="h-10 w-full lg:w-60 border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
+                                className="h-10 w-full lg:w-[80%] border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -100,7 +100,7 @@ function Signup() {
                                 placeholder="Email Address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="h-10 w-full lg:w-60 border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
+                                className="h-10 w-full lg:w-[80%] border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -108,7 +108,7 @@ function Signup() {
                                 placeholder="Phone Number (10 digits)"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
-                                className="h-10 w-full lg:w-60 border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
+                                className="h-10 w-full lg:w-[80%] border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -116,7 +116,7 @@ function Signup() {
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPass(e.target.value)}
-                                className="h-10 w-full lg:w-60  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
+                                className="h-10 w-full lg:w-[80%]  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
 
                             <input
@@ -124,13 +124,13 @@ function Signup() {
                                 placeholder="Confirm Password"
                                 value={cpassword}
                                 onChange={(e) => setCpass(e.target.value)}
-                                className="h-10 w-full lg:w-60  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
+                                className="h-10 w-full lg:w-[80%]  border border-[#BEBEC2] lg:rounded-[1vh] rounded-[0.5vh] pl-4"
                             />
                             <button type="submit"
                                 className='flex items-center justify-center h-[6vh] lg:w-[80%] w-full bg-linear-to-r from-orange-400 to-[#f9a825] hover:bg-linear-to-r hover:from-[#f9a825] hover:to-orange-400 rounded-[1vh] text-white font-bold text-[2vh]'>{loader?(<Loader/>):("Signup")}</button>
                         </form>
                         <div>
-                            <p className='text-[2vh] text-[#6E6D7E]'>Already have an account? <Link to="/signin" className='text-orange-400 font-semibold'>Sign in</Link></p>
+                            <p className='text-xs text-[#6E6D7E]'>Already have an account? <Link to="/signin" className='text-orange-400 font-semibold'>Sign in</Link></p>
                         </div>
                     </div>
                     <img className='w-[40%] h-full hidden lg:block rounded-[1vh] border-orange-300 border-2' src={signImg} alt="" />

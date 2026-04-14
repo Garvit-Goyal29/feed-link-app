@@ -59,23 +59,23 @@ function Signin() {
                             <h1 className="font-bold text-2xl lg:text-3xl text-[#202322]">
                                 Welcome Back
                             </h1>
-                            <p className="text-[#6E6D7E] text-[1.6vh] lg:text-[1.8vh] font-semibold">
+                            <p className="text-[#6E6D7E] text-[1.6vh] lg:text-[1.8vh] text-center font-semibold">
                                 Hey, welcome back to user.
                             </p>
                         </div>
                         <form
                             onSubmit={handleExistUser}
-                            className="flex flex-col justify-evenly h-auto lg:h-[40%] items-center lg:items-start w-full gap-3"
+                            className="flex flex-col justify-evenly h-auto lg:h-[40%] items-center lg:items-center w-full gap-3"
                         >
                             <input
-                                className="w-full lg:w-60 border border-[#BEBEC2] h-10 p-3 text-sm rounded"
+                                className="w-full lg:w-[80%] border border-[#BEBEC2] h-10 p-3 text-sm rounded"
                                 type="email"
                                 placeholder="example@email.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <input
-                                className="w-full lg:w-60 border border-[#BEBEC2] h-10 p-3 text-sm rounded"
+                                className="w-full lg:w-[80%] border border-[#BEBEC2] h-10 p-3 text-sm rounded"
                                 type="password"
                                 placeholder="password"
                                 value={password}
@@ -83,12 +83,12 @@ function Signin() {
                             />
                             <button
                                 type="submit"
-                                className="bg-linear-to-r from-orange-400 to-[#f9a825] hover:from-[#f9a825] hover:to-orange-400 text-white text-sm p-2 font-semibold rounded w-full lg:w-60 transition duration-300 flex items-center justify-center"
+                                className="bg-linear-to-r from-orange-400 to-[#f9a825] hover:from-[#f9a825] hover:to-orange-400 text-white text-sm p-2 font-semibold rounded w-full lg:w-[80%] transition duration-300 flex items-center justify-center"
                             >
                                 {loader ? <Loader /> : "Signin"}
                             </button>
                         </form>
-                        <p className="text-[1.8vh] text-[#6E6D7E] text-center lg:text-left">
+                        <p className="text-xs text-[#6E6D7E] text-center">
                             Don't have an account?{" "}
                             <Link to="/signup" className="text-orange-400 font-semibold">
                                 Sign up
