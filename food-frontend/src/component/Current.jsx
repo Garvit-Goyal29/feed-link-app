@@ -17,7 +17,11 @@ function Current() {
     useEffect(() => {
         if (!user?.id) return;
         setloader(true);
-        fetch(`https://feed-link-app-1.onrender.com/api/donation?userId=${user.id}`)
+        fetch(`http://localhost:5000/api/donation?userId=${user.id}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setloader(false)
@@ -28,8 +32,11 @@ function Current() {
     const handleDelete = async (id) => {
         try {
             setloader(true)
-            const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/${id}`, {
+            const res = await fetch(`http://localhost:5000/api/donation/${id}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
             });
 
             const data = await res.json();

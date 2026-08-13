@@ -1,5 +1,6 @@
 import User from '../model/userModel.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 const signinUser = async (req, res) => {
     try {
         const { email, password } = req.body
@@ -17,8 +18,16 @@ const signinUser = async (req, res) => {
                 message: "Invalid password"
             })
         }
+
+        const token = jwt.sign(
+            { id: userExist.id, email: userExist.email },
+            process.env.JWT_SECRET || 'fallback_secret',
+            { expiresIn: '7d' }
+        );
+
         res.json({
             success: true,
+            token,
             id: userExist.id,
             name: userExist.name,
             email: userExist.email,

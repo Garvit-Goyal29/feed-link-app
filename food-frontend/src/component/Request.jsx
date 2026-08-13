@@ -16,7 +16,11 @@ function Request() {
     }, []);
     useEffect(() => {
         if (!user?.id) return;
-        fetch(`https://feed-link-app-1.onrender.com/api/donation/request?userId=${user.id}`)
+        fetch(`http://localhost:5000/api/donation/request?userId=${user.id}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setRequest(data.data);
@@ -25,10 +29,11 @@ function Request() {
     }, [user?.id]);
     const acceptRequest = async (id) => {
         try {
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/acceptRequest", {
+            const res = await fetch("http://localhost:5000/api/donation/acceptRequest", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({ id })
             })
@@ -45,10 +50,11 @@ function Request() {
     }
     const rejectRequest = async (id) => {
         try {
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/rejectRequest", {
+            const res = await fetch("http://localhost:5000/api/donation/rejectRequest", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({ id })
             })

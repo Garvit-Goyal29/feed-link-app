@@ -6,6 +6,15 @@ function Receiver() {
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [loader, setloader] = useState(false);
+    const [head, sethead] = useState(false);
+    useEffect(() => {
+        const user = localStorage.getItem("userActive");
+        if (user && user !== "undefined") {
+            sethead(true);
+        } else {
+            sethead(false);
+        }
+    }, [])
     useEffect(() => {
         const rawData = localStorage.getItem("userActive")
         let user = null;
@@ -22,7 +31,11 @@ function Receiver() {
         if (!user) return;
         try {
             setloader(true)
-            fetch("https://feed-link-app-1.onrender.com/api/receiver")
+            fetch("http://localhost:5000/api/receiver", {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
                 .then(res => res.json())
                 .then(data => {
                     setloader(false)
@@ -37,10 +50,11 @@ function Receiver() {
     async function handleRequest(id) {
         try {
             // setloader(true);
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/receiver/request", {
+            const res = await fetch("http://localhost:5000/api/receiver/request", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({
                     id,
@@ -70,7 +84,7 @@ function Receiver() {
                 <div className="w-[90vw] h-full border rounded-xl bg-[#1e1e1e] flex flex-wrap justify-center items-center gap-[2vw] py-[2vh]">
                     {loader ? (<Loader size="9.2vh" bor="1vh" />) : (food.length === 0 ? (
                         <>
-                            <h1 className="p-[2vh] text-2xl text-center text-white font-[jost]">Not available! or sign-in/sign-up</h1>
+                            {head ? (<h1 className="p-[2vh] text-2xl text-center text-white font-[jost]">Not available!</h1>) : (<h1 className="p-[2vh] text-2xl text-center text-white font-[jost]">sign-in/sign-up</h1>)}
                         </>
                     )
                         :

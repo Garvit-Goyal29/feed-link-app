@@ -48,7 +48,7 @@ function Signup() {
 
         try {
             setloader(true)
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/auth/signup", {
+            const res = await fetch("http://localhost:5000/api/auth/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

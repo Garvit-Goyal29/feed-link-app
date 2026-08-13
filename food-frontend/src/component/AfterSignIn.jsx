@@ -4,6 +4,7 @@ import { UserIcon } from '@heroicons/react/24/outline'
 function AfterSignIn({ user }) {
     const logout = () => {
         localStorage.removeItem("userActive")
+        localStorage.removeItem("token")
         window.location.href = "/signin"
     }
     return (

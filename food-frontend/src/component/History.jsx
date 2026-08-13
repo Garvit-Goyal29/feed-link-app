@@ -17,7 +17,11 @@ function History() {
     const fetchHistory = () => {
         if (!user?.id) return;
         setloader(true)
-        fetch(`https://feed-link-app-1.onrender.com/api/donation/history?userId=${user.id}`)
+        fetch(`http://localhost:5000/api/donation/history?userId=${user.id}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setloader(false)
@@ -33,10 +37,11 @@ function History() {
     const markAsCompleted = async (id) => {
         try {
             setloader(true)
-            const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/completeRequest`, {
+            const res = await fetch(`http://localhost:5000/api/donation/completeRequest`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({ id })
             });

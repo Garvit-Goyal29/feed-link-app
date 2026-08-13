@@ -21,7 +21,7 @@ function Signin() {
         }
         try {
             setLoader(true)
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/auth/signin", {
+            const res = await fetch("http://localhost:5000/api/auth/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -34,6 +34,7 @@ function Signin() {
             const data = await res.json()
             if (data.success) {
                 setLoader(false)
+                localStorage.setItem("token", data.token);
                 localStorage.setItem("userActive", JSON.stringify(data));
                 window.location.href = "/";
             } else {
@@ -41,7 +42,9 @@ function Signin() {
                 alert(data.message);
             }
         } catch (error) {
-            console.log("Error:" + error)
+            setLoader(false);
+            console.log("Error:" + error);
+            alert("Network error: Could not connect to the server.");
         }
     }
     const { ref: refsignin, inView: SigninVisible } = useInView({

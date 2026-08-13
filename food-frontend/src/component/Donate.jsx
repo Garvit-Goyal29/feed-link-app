@@ -25,7 +25,7 @@ function Donate() {
         user = null;
     }
     const today = new Date().toLocaleDateString();
-    const [loader,setloader] = useState(false);
+    const [loader, setloader] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -70,10 +70,11 @@ function Donate() {
             }
             try {
                 setloader(true)
-                const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/donate", {
+                const res = await fetch("http://localhost:5000/api/donation/donate", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
                     },
                     body: JSON.stringify(finalData)
                 })
@@ -182,7 +183,7 @@ function Donate() {
                                 className="w-[94%] bg-orange-500 hover:bg-orange-600 py-3 rounded-xl font-semibold transition duration-300 hover:scale-[1.01]"
 
                             >
-                                {loader?(<Loader/>):"Submit Donation"}
+                                {loader ? (<Loader />) : "Submit Donation"}
                             </button>
                             <button
                                 onClick={resetForm}
@@ -214,7 +215,7 @@ function Donate() {
                             <Route path="/history" element={<History />} />
                         </Routes>
                     </div>
-                    <button
+                    {/* <button
                         onClick={() => {
                             window.scrollTo(0, 0);
                             return null;
@@ -223,7 +224,7 @@ function Donate() {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-white">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                         </svg>
-                    </button>
+                    </button> */}
                 </div>
                 <div className='w-full h-full mt-[2vh] flex justify-center items-center'>
                     <Request />

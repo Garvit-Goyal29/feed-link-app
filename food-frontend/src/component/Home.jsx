@@ -22,7 +22,7 @@ function Home() {
     const SyP = useScroll().scrollYProgress
     const [meal, setmeal] = useState(0)
     useEffect(() => {
-        fetch('https://feed-link-app-1.onrender.com/api/getMeal')
+        fetch('http://localhost:5000/api/getMeal')
             .then(res => res.json())
             .then(data => {
                 console.log(data.data)
@@ -97,7 +97,7 @@ function Home() {
                                 Have extra food from your event, home, or restaurant? List it here to help someone
                             </p>
                             <NavLink
-                                to="/donate/current"
+                                to="/donate"
                                 className='bg-orange-400 font-[Jost] w-full lg:w-[13vw] flex justify-center items-center p-2 gap-1 rounded hover:bg-black hover:text-white duration-300'
                             >
                                 List Food Now <ArrowRightIcon className="w-5 h-5" />
