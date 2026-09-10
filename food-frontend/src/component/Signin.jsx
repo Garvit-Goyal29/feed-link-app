@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import logo from '../assets/logo.png'
 import sigin from '../assets/signin.png'
 import Loader from "./Loader";
+import API_URL from '../config/api';
 import './Signin.css'
 function Signin() {
     const [email, setEmail] = useState("");
@@ -21,8 +22,9 @@ function Signin() {
         }
         try {
             setLoader(true)
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/auth/signin", {
+            const res = await fetch(`${API_URL}/api/auth/signin`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -34,7 +36,6 @@ function Signin() {
             const data = await res.json()
             if (data.success) {
                 setLoader(false)
-                localStorage.setItem("userActive", JSON.stringify(data));
                 window.location.href = "/";
             } else {
                 setLoader(false)

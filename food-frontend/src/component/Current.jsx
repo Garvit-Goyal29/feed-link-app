@@ -1,35 +1,41 @@
 import { useEffect, useState } from "react";
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Loader from './Loader.jsx'
+import API_URL from '../config/api';
 function Current() {
     const [donations, setDonations] = useState([]);
     const [loader, setloader] = useState(false);
-    const rawData = localStorage.getItem("userActive");
-    let user = null;
-    try {
-        if (rawData && rawData !== "undefined") {
-            user = JSON.parse(rawData);
-        }
-    } catch (err) {
-        console.log("Invalid JSON in localStorage", err);
-        user = null;
-    }
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) setUser(data.user);
+                else setUser(null);
+            })
+            .catch(() => setUser(null));
+    }, []);
+
     useEffect(() => {
         if (!user?.id) return;
         setloader(true);
-        fetch(`https://feed-link-app-1.onrender.com/api/donation?userId=${user.id}`)
+        fetch(`${API_URL}/api/donation?userId=${user.id}`, {
+            credentials: "include"
+        })
             .then(res => res.json())
             .then(data => {
                 setloader(false)
-                setDonations(data.data);
+                setDonations(data.data || []);
             })
             .catch(err => console.log(err));
     }, [user?.id]);
     const handleDelete = async (id) => {
         try {
             setloader(true)
-            const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/${id}`, {
+            const res = await fetch(`${API_URL}/api/donation/${id}`, {
                 method: "DELETE",
+                credentials: "include"
             });
 
             const data = await res.json();

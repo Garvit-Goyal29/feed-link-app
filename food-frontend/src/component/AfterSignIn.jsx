@@ -1,10 +1,20 @@
 import React from "react";
 import { motion } from 'motion/react'
 import { UserIcon } from '@heroicons/react/24/outline'
+import API_URL from '../config/api';
+
 function AfterSignIn({ user }) {
-    const logout = () => {
-        localStorage.removeItem("userActive")
-        window.location.href = "/signin"
+    const logout = async () => {
+        try {
+            await fetch(`${API_URL}/api/auth/logout`, {
+                method: "POST",
+                credentials: "include"
+            });
+        } catch (err) {
+            console.log(err);
+        }
+        localStorage.clear();
+        window.location.href = "/signin";
     }
     return (
         <>

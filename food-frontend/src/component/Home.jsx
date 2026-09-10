@@ -8,6 +8,7 @@ import rImg from '../assets/receiveCard.jpg'
 import './Home.css'
 import { useInView } from "react-intersection-observer";
 import { motion, useScroll } from 'motion/react'
+import API_URL from '../config/api';
 function Home() {
     const { ref: titleRef, inView: titleVisible } = useInView({
         threshold: 0.15
@@ -22,7 +23,7 @@ function Home() {
     const SyP = useScroll().scrollYProgress
     const [meal, setmeal] = useState(0)
     useEffect(() => {
-        fetch('https://feed-link-app-1.onrender.com/api/getMeal')
+        fetch(`${API_URL}/api/getMeal`)
             .then(res => res.json())
             .then(data => {
                 console.log(data.data)

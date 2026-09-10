@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import signImg from '../assets/signupimg.png'
 import Loader from "./Loader";
+import API_URL from '../config/api';
 import './Signup.css'
 function Signup() {
     const { ref: refsignup, inView: signupVisiblep } = useInView({
@@ -48,8 +49,9 @@ function Signup() {
 
         try {
             setloader(true)
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/auth/signup", {
+            const res = await fetch(`${API_URL}/api/auth/signup`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },

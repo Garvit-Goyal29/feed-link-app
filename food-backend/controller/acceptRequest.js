@@ -84,16 +84,18 @@ async function acceptRequest(req, res) {
                 foodDescription
             };
 
+            const fromSender = process.env.EMAIL_USER || "noreply@feedlink.com";
+
             // Send emails in parallel to avoid timeout and ensure both are attempted
             await Promise.all([
                 transporter.sendMail({
-                    from: `"Feed Link" <${process.env.EMAIL_USER}>`,
+                    from: `"Feed Link" <${fromSender}>`,
                     to: receiverEmail,
                     subject: "Request Accepted 🎉",
                     html: acceptRequestTemplate(receiverProps)
                 }),
                 transporter.sendMail({
-                    from: `"Feed Link" <${process.env.EMAIL_USER}>`,
+                    from: `"Feed Link" <${fromSender}>`,
                     to: donorEmail,
                     subject: "You accepted a request",
                     html: donorConfirmationTemplate(donorProps)

@@ -1,28 +1,28 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
+import API_URL from '../config/api';
 function Receiver() {
     const [food, setFood] = useState([])
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [loader, setloader] = useState(false);
     useEffect(() => {
-        const rawData = localStorage.getItem("userActive")
-        let user = null;
-        try {
-            if (rawData && rawData !== "undefined") {
-                user = JSON.parse(rawData);
-                setPhone(user.phone)
-                setEmail(user.email)
-            }
-        } catch (err) {
-            console.log("Invalid JSON in localStorage", err);
-            user = null;
-        }
-        if (!user) return;
+        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.user) {
+                    setPhone(data.user.phone || "");
+                    setEmail(data.user.email || "");
+                }
+            })
+            .catch(err => console.log(err));
+
         try {
             setloader(true)
-            fetch("https://feed-link-app-1.onrender.com/api/receiver")
+            fetch(`${API_URL}/api/receiver`, {
+                credentials: "include"
+            })
                 .then(res => res.json())
                 .then(data => {
                     setloader(false)
@@ -36,9 +36,9 @@ function Receiver() {
     }, [])
     async function handleRequest(id) {
         try {
-            // setloader(true);
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/receiver/request", {
+            const res = await fetch(`${API_URL}/api/receiver/request`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },

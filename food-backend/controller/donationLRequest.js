@@ -1,13 +1,23 @@
 import donateModel from '../model/donateModel.js'
 import mongoose from "mongoose";
+
 const donationLRequest = async (req, res) => {
     try {
-        const { userId } = req.query;
-        const dataForListing  = await donateModel.find({status: "requested",userId:new mongoose.Types.ObjectId(userId)  })
+        const userId = req.user?.id || req.query.userId;
+        if (!userId) {
+            return res.status(400).json({
+                success: false,
+                message: "User ID is required"
+            });
+        }
+        const dataForListing = await donateModel.find({
+            status: "requested",
+            userId: new mongoose.Types.ObjectId(userId)
+        });
         res.status(200).json({
             success: true,
             message: "Requested food list successful",
-            data:dataForListing
+            data: dataForListing
         })
     } catch (err) {
         console.log(err);
@@ -17,4 +27,4 @@ const donationLRequest = async (req, res) => {
         });
     }
 }
-export default donationLRequest;
+export default donationLRequest;

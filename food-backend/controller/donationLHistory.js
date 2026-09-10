@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const donationLHistory = async (req, res) => {
     try {
-        const { userId } = req.query;
+        const userId = req.user?.id || req.query.userId;
         if (!userId) {
             return res.status(400).json({
                 success: false,
@@ -31,3 +31,4 @@ const donationLHistory = async (req, res) => {
 }
 
 export default donationLHistory;
+

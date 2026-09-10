@@ -1,5 +1,7 @@
 import User from '../model/userModel.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
 const signupUser = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body
@@ -17,22 +19,42 @@ const signupUser = async (req, res) => {
             password: hashedPassword,
             phone
         })
+
+        const secret = process.env.JWT_SECRET || 'feed_link_jwt_secret_key_2026_safe';
+        const token = jwt.sign(
+            { id: user._id, email: user.email },
+            secret,
+            { expiresIn: '7d' }
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+
         res.json({
             success: true,
             message: "Signup successful",
+            token,
             user: {
                 id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone
-            }
+            },
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone
         })
     } catch (err) {
-        console.log(err);
+        console.log("Signup error:", err);
         res.status(500).json({
             success: false,
-            message: "Server error"
+            message: err.message || "Server error"
         });
     }
 }
-export default signupUser;
+export default signupUser;

@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import API_URL from '../config/api';
 function Request() {
     const [request, setRequest] = useState([]);
     const [user, setUser] = useState(null);
     useEffect(() => {
-        const rawData = localStorage.getItem("userActive");
-        try {
-            if (rawData && rawData !== "undefined") {
-                setUser(JSON.parse(rawData));
-            }
-        } catch (err) {
-            console.log("Invalid JSON in localStorage", err);
-            setUser(null);
-        }
+        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) setUser(data.user);
+                else setUser(null);
+            })
+            .catch(() => setUser(null));
     }, []);
     useEffect(() => {
         if (!user?.id) return;
-        fetch(`https://feed-link-app-1.onrender.com/api/donation/request?userId=${user.id}`)
+        fetch(`${API_URL}/api/donation/request?userId=${user.id}`, {
+            credentials: "include"
+        })
             .then(res => res.json())
             .then(data => {
-                setRequest(data.data);
+                setRequest(data.data || []);
             })
             .catch(err => console.log(err));
     }, [user?.id]);
     const acceptRequest = async (id) => {
         try {
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/acceptRequest", {
+            const res = await fetch(`${API_URL}/api/donation/acceptRequest`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -45,8 +47,9 @@ function Request() {
     }
     const rejectRequest = async (id) => {
         try {
-            const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/rejectRequest", {
+            const res = await fetch(`${API_URL}/api/donation/rejectRequest`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },

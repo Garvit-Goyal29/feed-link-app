@@ -1,22 +1,27 @@
 import { NavLink } from "react-router-dom";
 import logo from '../assets/logo.png'
 import { motion, useScroll } from 'motion/react'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AfterSignIn from '../component/AfterSignIn.jsx'
+import API_URL from '../config/api';
 import './Navbar.css'
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [obj, setObj] = useState(null);
     const ScrollYAxisProgress = useScroll().scrollYProgress;
-    const data = localStorage.getItem("userActive")
-    let obj = null;
-    try {
-        if (data && data !== "undefined") {
-            obj = JSON.parse(data);
-        }
-    } catch (err) {
-        console.log("Invalid user data in localStorage");
-        obj = null;
-    }
+
+    useEffect(() => {
+        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.user) {
+                    setObj(data.user);
+                } else {
+                    setObj(null);
+                }
+            })
+            .catch(() => setObj(null));
+    }, []);
     return (
         <>
             <div className='h-[0.7vh] bg-orange-200 w-full fixed left-0 top-0 z-51'>

@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
+import API_URL from '../config/api';
 function History() {
     const [donations, setDonations] = useState([]);
     const [loader, setloader] = useState(false);
-    const rawData = localStorage.getItem("userActive");
-    let user = null;
-    try {
-        if (rawData && rawData !== "undefined") {
-            user = JSON.parse(rawData);
-        }
-    } catch (err) {
-        console.log("Invalid JSON in localStorage", err);
-        user = null;
-    }
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) setUser(data.user);
+                else setUser(null);
+            })
+            .catch(() => setUser(null));
+    }, []);
 
     const fetchHistory = () => {
         if (!user?.id) return;
         setloader(true)
-        fetch(`https://feed-link-app-1.onrender.com/api/donation/history?userId=${user.id}`)
+        fetch(`${API_URL}/api/donation/history?userId=${user.id}`, {
+            credentials: "include"
+        })
             .then(res => res.json())
             .then(data => {
                 setloader(false)
-                setDonations(data.data);
+                setDonations(data.data || []);
             })
             .catch(err => console.log(err));
     };
@@ -33,8 +37,9 @@ function History() {
     const markAsCompleted = async (id) => {
         try {
             setloader(true)
-            const res = await fetch(`https://feed-link-app-1.onrender.com/api/donation/completeRequest`, {
+            const res = await fetch(`${API_URL}/api/donation/completeRequest`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },

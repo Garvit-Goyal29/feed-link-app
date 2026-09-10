@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import History from './History';
 import Request from './Request';
 import Current from './Current';
 import Loader from './Loader'
 import './Donate.css'
+import API_URL from '../config/api';
 function Donate() {
     const { ref: donationRef, inView: donationVisible } = useInView({
         threshold: 0.1
@@ -14,16 +15,16 @@ function Donate() {
     const { ref: currentRef, inView: currentVisible } = useInView({
         threshold: 0.1
     });
-    const rawData = localStorage.getItem("userActive");
-    let user = null;
-    try {
-        if (rawData && rawData !== "undefined") {
-            user = JSON.parse(rawData);
-        }
-    } catch (err) {
-        console.log("Invalid JSON in localStorage", err);
-        user = null;
-    }
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        fetch(`${API_URL}/api/auth/me`, { credentials: "include" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) setUser(data.user);
+                else setUser(null);
+            })
+            .catch(() => setUser(null));
+    }, []);
     const today = new Date().toLocaleDateString();
     const [loader,setloader] = useState(false);
     const [formData, setFormData] = useState({
@@ -51,7 +52,7 @@ function Donate() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (rawData) {
+        if (user) {
             const finalData = {
                 ...formData,
                 name: user.name,
@@ -70,8 +71,9 @@ function Donate() {
             }
             try {
                 setloader(true)
-                const res = await fetch("https://feed-link-app-1.onrender.com/api/donation/donate", {
+                const res = await fetch(`${API_URL}/api/donation/donate`, {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json"
                     },
