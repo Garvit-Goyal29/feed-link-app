@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
+import Notfound from './Notfound'
 import History from './History';
 import Request from './Request';
 import Current from './Current';
@@ -9,6 +10,12 @@ import Loader from './Loader'
 import { getUser } from '../utils/auth'
 import './Donate.css'
 function Donate() {
+    const VALID_DONATE_PATHS = ['/donate', '/donate/current', '/donate/history'];
+    const location = useLocation();
+    const pathname = location.pathname.replace(/\/+$/, '');
+    if (!VALID_DONATE_PATHS.includes(pathname)) {
+        return <Notfound />;
+    }
     const { ref: donationRef, inView: donationVisible } = useInView({
         threshold: 0.1
     })
