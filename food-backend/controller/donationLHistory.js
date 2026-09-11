@@ -1,33 +1,22 @@
 import donateModel from '../model/donateModel.js'
-import mongoose from "mongoose";
 
 const donationLHistory = async (req, res) => {
     try {
-        const { userId } = req.query;
-        if (!userId) {
-            return res.status(400).json({
-                success: false,
-                message: "User ID is required"
-            });
-        }
-        
+        // Use JWT identity — no longer accepts userId from query string
         const dataForListing = await donateModel.find({
-            status: { $in: ["accepted", "completed", "expired"] },
-            userId: new mongoose.Types.ObjectId(userId)
-        }).sort({ updatedAt: -1 });
+            userId: req.user.id,
+            status: { $in: ["accepted", "completed", "expired"] }
+        }).sort({ updatedAt: -1 })
 
         res.status(200).json({
             success: true,
-            message: "History fetched successful",
+            message: "History fetched successfully",
             data: dataForListing
         })
     } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+        console.log(err)
+        res.status(500).json({ success: false, message: "Server error" })
     }
 }
 
-export default donationLHistory;
+export default donationLHistory

@@ -1,32 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
+import { getUser } from '../utils/auth'
 function Receiver() {
     const [food, setFood] = useState([])
-    const [phone, setPhone] = useState("")
-    const [email, setEmail] = useState("")
     const [loader, setloader] = useState(false);
     const [head, sethead] = useState(false);
     useEffect(() => {
-        const user = localStorage.getItem("userActive");
-        if (user && user !== "undefined") {
+        const user = getUser();
+        if (user) {
             sethead(true);
         } else {
             sethead(false);
-        }
-    }, [])
-    useEffect(() => {
-        const rawData = localStorage.getItem("userActive")
-        let user = null;
-        try {
-            if (rawData && rawData !== "undefined") {
-                user = JSON.parse(rawData);
-                setPhone(user.phone)
-                setEmail(user.email)
-            }
-        } catch (err) {
-            console.log("Invalid JSON in localStorage", err);
-            user = null;
         }
         if (!user) return;
         try {
@@ -49,30 +34,25 @@ function Receiver() {
     }, [])
     async function handleRequest(id) {
         try {
-            // setloader(true);
             const res = await fetch("http://localhost:5000/api/receiver/request", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
-                body: JSON.stringify({
-                    id,
-                    phone,
-                    email
-                })
+                body: JSON.stringify({ id })
             });
             const data = await res.json();
             if (data.success) {
-                // setloader(false)
                 setFood(prev =>
                     prev.map(item =>
                         item._id === id ? { ...item, status: "requested" } : item
                     )
                 );
+            } else {
+                alert(data.message || "Something went wrong ❌");
             }
         } catch (err) {
-            // setloader(false)
             console.log("receiver request pe : " + err + " hai");
         }
     }

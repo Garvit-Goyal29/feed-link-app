@@ -6,6 +6,7 @@ import History from './History';
 import Request from './Request';
 import Current from './Current';
 import Loader from './Loader'
+import { getUser } from '../utils/auth'
 import './Donate.css'
 function Donate() {
     const { ref: donationRef, inView: donationVisible } = useInView({
@@ -14,16 +15,7 @@ function Donate() {
     const { ref: currentRef, inView: currentVisible } = useInView({
         threshold: 0.1
     });
-    const rawData = localStorage.getItem("userActive");
-    let user = null;
-    try {
-        if (rawData && rawData !== "undefined") {
-            user = JSON.parse(rawData);
-        }
-    } catch (err) {
-        console.log("Invalid JSON in localStorage", err);
-        user = null;
-    }
+    const user = getUser();
     const today = new Date().toLocaleDateString();
     const [loader, setloader] = useState(false);
     const [formData, setFormData] = useState({
@@ -51,19 +43,13 @@ function Donate() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (rawData) {
-            const finalData = {
-                ...formData,
-                name: user.name,
-                email: user.email,
-                userId: user?.id
-            }
-            if (!/^\d{10}$/.test(finalData.phone)) {
+        if (user) {
+            if (!/^\d{10}$/.test(formData.phone)) {
                 alert("Enter valid 10 digit phone number");
                 return;
             }
             const today = new Date();
-            const selectedDate = new Date(finalData.expiryDate);
+            const selectedDate = new Date(formData.expiryDate);
             if (selectedDate <= today) {
                 alert("Expiry date must be in future");
                 return;
@@ -76,7 +62,7 @@ function Donate() {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${localStorage.getItem("token")}`
                     },
-                    body: JSON.stringify(finalData)
+                    body: JSON.stringify(formData)  // only sends: phone, location, food, expiryDate, description
                 })
                 const data = await res.json()
                 if (data.success) {

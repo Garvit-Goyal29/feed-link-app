@@ -8,6 +8,7 @@ import rImg from '../assets/receiveCard.jpg'
 import './Home.css'
 import { useInView } from "react-intersection-observer";
 import { motion, useScroll } from 'motion/react'
+import { getUser } from '../utils/auth'
 function Home() {
     const { ref: titleRef, inView: titleVisible } = useInView({
         threshold: 0.15
@@ -20,12 +21,12 @@ function Home() {
         triggerOnce: true
     })
     const SyP = useScroll().scrollYProgress
-    const [meal, setmeal] = useState(0)
+    const [meal, setmeal] = useState(0);
+    const user = getUser();
     useEffect(() => {
         fetch('http://localhost:5000/api/getMeal')
             .then(res => res.json())
             .then(data => {
-                console.log(data.data)
                 setmeal(data.data)
             })
     }, [meal])

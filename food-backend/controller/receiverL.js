@@ -1,11 +1,15 @@
 import donateModel from '../model/donateModel.js'
 const receiverL = async (req, res) => {
     try {
-        const dataForListing  = await donateModel.find({status: "available"})
+        // Exclude donations listed by the current user themselves
+        const dataForListing = await donateModel.find({
+            status: "available",
+            userId: { $ne: req.user.id }
+        })
         res.status(200).json({
             success: true,
             message: "Donation list successful",
-            data:dataForListing
+            data: dataForListing
         })
     } catch (err) {
         console.log(err);
@@ -15,4 +19,4 @@ const receiverL = async (req, res) => {
         });
     }
 }
-export default receiverL;
+export default receiverL;

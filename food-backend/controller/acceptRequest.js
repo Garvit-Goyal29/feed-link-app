@@ -9,14 +9,21 @@ import {
 
 async function acceptRequest(req, res) {
     try {
-        const { id } = req.body;
-        console.log("Accepting request for donation ID:", id);
+        const { id } = req.params;
 
         const food = await donateModel.findById(id);
         if (!food) {
             return res.status(404).json({
                 success: false,
                 message: "Donation not found"
+            });
+        }
+
+        // Only the actual donor can accept a request
+        if (food.userId.toString() !== req.user.id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: "Only the donor can accept this request"
             });
         }
 
@@ -45,8 +52,6 @@ async function acceptRequest(req, res) {
         await food.save();
         request.status = "accepted";
         await request.save();
-
-        console.log("Database updated. Preparing to send emails...");
 
         const donorName = food.name;
         const donorEmail = food.email;

@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Loader from './Loader.jsx'
+import { getUser } from '../utils/auth'
 function Current() {
     const [donations, setDonations] = useState([]);
     const [loader, setloader] = useState(false);
-    const rawData = localStorage.getItem("userActive");
-    let user = null;
-    try {
-        if (rawData && rawData !== "undefined") {
-            user = JSON.parse(rawData);
-        }
-    } catch (err) {
-        console.log("Invalid JSON in localStorage", err);
-        user = null;
-    }
+    const user = getUser();
     useEffect(() => {
         if (!user?.id) return;
         setloader(true);
-        fetch(`http://localhost:5000/api/donation?userId=${user.id}`, {
+        fetch('http://localhost:5000/api/donation/current', {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
@@ -27,7 +19,10 @@ function Current() {
                 setloader(false)
                 setDonations(data.data);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setloader(false)
+                console.log(err)
+            })
     }, [user?.id]);
     const handleDelete = async (id) => {
         try {

@@ -35,7 +35,6 @@ function Signin() {
             if (data.success) {
                 setLoader(false)
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("userActive", JSON.stringify(data));
                 window.location.href = "/";
             } else {
                 setLoader(false)

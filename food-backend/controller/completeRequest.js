@@ -1,32 +1,27 @@
-import donateModel from '../model/donateModel.js';
+import donateModel from '../model/donateModel.js'
 
 const completeRequest = async (req, res) => {
     try {
-        const { id } = req.body;
-        const donation = await donateModel.findById(id);
+        const { id } = req.body
+        const donation = await donateModel.findById(id)
 
         if (!donation) {
-            return res.status(404).json({
-                success: false,
-                message: "Donation not found"
-            });
+            return res.status(404).json({ success: false, message: "Donation not found" })
         }
 
-        donation.status = "completed";
-        await donation.save();
+        // Only the donor can mark their donation as completed
+        if (donation.userId.toString() !== req.user.id.toString()) {
+            return res.status(403).json({ success: false, message: "Not authorized to complete this donation" })
+        }
 
-        res.status(200).json({
-            success: true,
-            message: "Donation marked as completed! ✅"
-        });
+        donation.status = "completed"
+        await donation.save()
 
+        res.status(200).json({ success: true, message: "Donation marked as completed ✅" })
     } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+        console.log(err)
+        res.status(500).json({ success: false, message: "Server error" })
     }
-};
+}
 
-export default completeRequest;
+export default completeRequest

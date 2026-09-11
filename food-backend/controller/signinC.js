@@ -20,7 +20,7 @@ const signinUser = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { id: userExist.id, email: userExist.email },
+            { id: userExist.id, email: userExist.email, name: userExist.name, phone: userExist.phone, },
             process.env.JWT_SECRET || 'fallback_secret',
             { expiresIn: '7d' }
         );
@@ -31,7 +31,7 @@ const signinUser = async (req, res) => {
             id: userExist.id,
             name: userExist.name,
             email: userExist.email,
-            phone:userExist.phone,
+            phone: userExist.phone,
             message: "Login successful"
         })
     } catch (err) {

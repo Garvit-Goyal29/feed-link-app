@@ -1,47 +1,32 @@
 import User from '../model/userModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+
 const signupUser = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body
         const userExist = await User.findOne({ email })
         if (userExist) {
-            return res.json({
+            return res.status(409).json({
                 success: false,
-                message: "User already exist!"
+                message: "User already exists!"
             })
         }
         const hashedPassword = await bcrypt.hash(password, 10)
-        const user = await User.create({
-            name,
-            email,
-            password: hashedPassword,
-            phone
-        })
-
+        const user = await User.create({ name, email, password: hashedPassword, phone })
         const token = jwt.sign(
-            { id: user._id, email: user.email },
+            { id: user._id, email: user.email, name: user.name, phone: user.phone },
             process.env.JWT_SECRET || 'fallback_secret',
             { expiresIn: '7d' }
-        );
-
-        res.json({
+        )
+        res.status(201).json({
             success: true,
             token,
-            message: "Signup successful",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                phone: user.phone
-            }
+            message: "Signup successful"
         })
     } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+        console.log(err)
+        res.status(500).json({ success: false, message: "Server error" })
     }
 }
-export default signupUser;
+export default signupUser

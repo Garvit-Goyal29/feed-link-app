@@ -1,29 +1,26 @@
-import donateModel from "../model/donateModel.js";
+import donateModel from '../model/donateModel.js'
 
 const donateDelete = async (req, res) => {
     try {
-        const { id } = req.params;
-        const deleted = await donateModel.findByIdAndDelete(id);
+        const { id } = req.params
+        const donation = await donateModel.findById(id)
 
-        if (!deleted) {
-            return res.status(404).json({
-                success: false,
-                message: "Donation not found"
-            });
+        if (!donation) {
+            return res.status(404).json({ success: false, message: "Donation not found" })
         }
 
-        res.status(200).json({
-            success: true,
-            message: "Donation deleted successfully"
-        });
+        // Only the owner can delete their own donation
+        if (donation.userId.toString() !== req.user.id.toString()) {
+            return res.status(403).json({ success: false, message: "Not authorized to delete this donation" })
+        }
 
+        await donateModel.findByIdAndDelete(id)
+
+        res.status(200).json({ success: true, message: "Donation deleted successfully" })
     } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+        console.log(err)
+        res.status(500).json({ success: false, message: "Server error" })
     }
-};
+}
 
-export default donateDelete;
+export default donateDelete

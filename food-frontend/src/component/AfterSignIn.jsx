@@ -3,7 +3,6 @@ import { motion } from 'motion/react'
 import { UserIcon } from '@heroicons/react/24/outline'
 function AfterSignIn({ user }) {
     const logout = () => {
-        localStorage.removeItem("userActive")
         localStorage.removeItem("token")
         window.location.href = "/signin"
     }
@@ -19,8 +18,8 @@ function AfterSignIn({ user }) {
                     </div>
                     <motion.button
                         whileHover={{
-                            scale:1.05,
-                            backgroundColor:"#000"
+                            scale: 1.05,
+                            backgroundColor: "#000"
                         }}
                         onClick={logout}
                         className="bg-[#1e1e1e] p-2 text-gray-200 text-xs font-bold rounded-2xl">Log out</motion.button>

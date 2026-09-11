@@ -1,41 +1,30 @@
 import { useEffect, useState } from "react";
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { getUser } from '../utils/auth'
+
 function Request() {
     const [request, setRequest] = useState([]);
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-        const rawData = localStorage.getItem("userActive");
-        try {
-            if (rawData && rawData !== "undefined") {
-                setUser(JSON.parse(rawData));
-            }
-        } catch (err) {
-            console.log("Invalid JSON in localStorage", err);
-            setUser(null);
-        }
-    }, []);
+    const user = getUser();
+
     useEffect(() => {
         if (!user?.id) return;
-        fetch(`http://localhost:5000/api/donation/request?userId=${user.id}`, {
+        fetch('http://localhost:5000/api/donation/pending-requests', {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         })
             .then(res => res.json())
-            .then(data => {
-                setRequest(data.data);
-            })
+            .then(data => setRequest(data.data))
             .catch(err => console.log(err));
     }, [user?.id]);
+
     const acceptRequest = async (id) => {
         try {
-            const res = await fetch("http://localhost:5000/api/donation/acceptRequest", {
-                method: "POST",
+            const res = await fetch(`http://localhost:5000/api/donation/${id}/accept`, {
+                method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: JSON.stringify({ id })
+                }
             })
             const data = await res.json();
             if (data.success) {
@@ -48,19 +37,18 @@ function Request() {
             console.log(err);
         }
     }
+
     const rejectRequest = async (id) => {
         try {
-            const res = await fetch("http://localhost:5000/api/donation/rejectRequest", {
-                method: "POST",
+            const res = await fetch(`http://localhost:5000/api/donation/${id}/reject`, {
+                method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: JSON.stringify({ id })
+                }
             })
             const data = await res.json();
             if (data.success) {
-                alert("Request rejected! ❌")
+                alert("Request rejected ❌")
                 setRequest(prev => prev.filter(r => r._id !== id));
             } else {
                 alert(data.message || "Something went wrong ❌");
@@ -69,11 +57,12 @@ function Request() {
             console.log(err);
         }
     }
+
     return (
         <>
             <div className="bg-[#1e1e1e] w-[90%] h-full rounded-xl flex justify-between items-center gap-4 p-4 flex-wrap">
                 {request.length === 0 ? (
-                    <p className="text-gray-400 text-center w-full">No donation list by you yet! <br />Tap on up button to list excess food.</p>
+                    <p className="text-gray-400 text-center w-full">No pending requests on your donations yet!</p>
                 ) : (
                     request.map((req) => (
                         <div

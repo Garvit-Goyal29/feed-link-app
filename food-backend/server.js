@@ -1,38 +1,27 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import connectDB from "./dbConfig.js";
-import auth from './routes/auth.js'
-import donation from "./routes/donation.js";
-import Receiver from "./routes/receiver.js";
-import home from './routes/home.js';
-dotenv.config();
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import connectDB from './dbConfig.js'
+import authRoutes from './routes/auth.js'
+import donationRoutes from './routes/donation.js'
+import receiverRoutes from './routes/receiver.js'
+import homeRoutes from './routes/home.js'
+
+dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
 connectDB()
 
-app.use(cors({ origin: "*" }));
-app.use(express.json());
+app.use(cors({ origin: '*' }))
+app.use(express.json())
 
+app.use('/api/auth',     authRoutes)
+app.use('/api/donation', donationRoutes)
+app.use('/api/receiver', receiverRoutes)
+app.use('/api',          homeRoutes)
 
-app.use("/api/auth", auth);
-app.use("/api/donation", donation);
-app.use("/api/receiver", Receiver);
-app.use("/api", home);
-
-app.get("/", (req, res) => {
-  res.send("Working ✅");
-});
-app.get("/", (req, res) => {
-  console.log("Route hit");
-  res.send("Working ✅");
-});
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "OK" });
-});
-
-app.listen(PORT,()=>{
-    console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
 })

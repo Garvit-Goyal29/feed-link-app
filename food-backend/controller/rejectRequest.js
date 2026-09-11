@@ -3,7 +3,7 @@ import Request from '../model/receiverModel.js';
 
 const rejectRequest = async (req, res) => {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
 
         const donation = await donateModel.findById(id);
 
@@ -11,6 +11,14 @@ const rejectRequest = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: "Donation not found"
+            });
+        }
+
+        // Only the actual donor can reject a request
+        if (donation.userId.toString() !== req.user.id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: "Only the donor can reject this request"
             });
         }
 

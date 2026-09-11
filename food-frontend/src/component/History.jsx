@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
+import { getUser } from '../utils/auth'
 function History() {
     const [donations, setDonations] = useState([]);
     const [loader, setloader] = useState(false);
-    const rawData = localStorage.getItem("userActive");
-    let user = null;
-    try {
-        if (rawData && rawData !== "undefined") {
-            user = JSON.parse(rawData);
-        }
-    } catch (err) {
-        console.log("Invalid JSON in localStorage", err);
-        user = null;
-    }
+    const user = getUser();
 
     const fetchHistory = () => {
         if (!user?.id) return;
         setloader(true)
-        fetch(`http://localhost:5000/api/donation/history?userId=${user.id}`, {
+        fetch('http://localhost:5000/api/donation/history', {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
@@ -37,13 +29,11 @@ function History() {
     const markAsCompleted = async (id) => {
         try {
             setloader(true)
-            const res = await fetch(`http://localhost:5000/api/donation/completeRequest`, {
-                method: "POST",
+            const res = await fetch(`http://localhost:5000/api/donation/${id}/complete`, {
+                method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: JSON.stringify({ id })
+                }
             });
 
             const data = await res.json();

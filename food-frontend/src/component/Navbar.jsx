@@ -3,20 +3,12 @@ import logo from '../assets/logo.png'
 import { motion, useScroll } from 'motion/react'
 import { useState } from "react";
 import AfterSignIn from '../component/AfterSignIn.jsx'
+import { getUser } from '../utils/auth'
 import './Navbar.css'
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const ScrollYAxisProgress = useScroll().scrollYProgress;
-    const data = localStorage.getItem("userActive")
-    let obj = null;
-    try {
-        if (data && data !== "undefined") {
-            obj = JSON.parse(data);
-        }
-    } catch (err) {
-        console.log("Invalid user data in localStorage");
-        obj = null;
-    }
+    const obj = getUser();
     return (
         <>
             <div className='h-[0.7vh] bg-orange-200 w-full fixed left-0 top-0 z-51'>

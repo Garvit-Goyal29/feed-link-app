@@ -9,6 +9,7 @@ import Signup from './component/Signup.jsx'
 import ScrollToTop from './component/ScrollToTop.jsx'
 import Donate from './component/Donate.jsx'
 import Receive from './component/Receive.jsx'
+import Notfound from './component/Notfound.jsx'
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/howitwork" element={<Howitwork />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
     </>

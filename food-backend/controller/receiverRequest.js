@@ -3,7 +3,7 @@ import donateModel from "../model/donateModel.js";
 
 const receiverRequest = async (req, res) => {
     try {
-        const { id, phone, email } = req.body;
+        const { id } = req.body;
 
         const food = await donateModel.findById(id);
 
@@ -14,24 +14,31 @@ const receiverRequest = async (req, res) => {
             });
         }
 
+        // Block user from requesting their own donation
+        if (food.userId.toString() === req.user.id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: "You cannot request your own donation"
+            });
+        }
+
         // Update donation status to "requested"
         food.status = "requested";
         await food.save();
 
+        // Use JWT identity for receiver info — no trusting client-sent email/phone
         await Request.create({
             foodId: id,
-            userEmail: email,
+            userEmail: req.user.email,
             donorEmail: food.email,
-            userPhone: phone
+            userPhone: req.user.phone
         });
 
-        res.json({ success: true, message: "Request sent" });
+        res.status(201).json({ success: true, message: "Request sent" });
     } catch (err) {
         console.log(err);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
 export default receiverRequest;
