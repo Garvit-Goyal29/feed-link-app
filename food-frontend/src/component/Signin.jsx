@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import logo from '../assets/logo.png'
 import sigin from '../assets/signin.png'
@@ -9,6 +9,7 @@ function Signin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loader, setLoader] = useState(false);
+    const navigate = useNavigate();
     const handleExistUser = async (e) => {
         e.preventDefault()
         if (!email) {
@@ -35,7 +36,8 @@ function Signin() {
             if (data.success) {
                 setLoader(false)
                 localStorage.setItem("token", data.token);
-                window.location.href = "/";
+                window.dispatchEvent(new Event("tokenChange"));
+                navigate("/");
             } else {
                 setLoader(false)
                 alert(data.message);

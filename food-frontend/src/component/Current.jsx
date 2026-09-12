@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TrashIcon } from '@heroicons/react/24/outline'
 import Loader from './Loader.jsx'
 import { getUser } from '../utils/auth'
-function Current() {
+function Current({ refreshKey = 0 }) {
     const [donations, setDonations] = useState([]);
     const [loader, setloader] = useState(false);
     const user = getUser();
@@ -23,7 +23,7 @@ function Current() {
                 setloader(false)
                 console.log(err)
             })
-    }, [user?.id]);
+    }, [user?.id, refreshKey]);
     const handleDelete = async (id) => {
         try {
             setloader(true)

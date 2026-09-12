@@ -66,7 +66,7 @@ function History() {
 
     return (
         <div className="flex justify-between items-start gap-4 p-4 flex-wrap">
-            {loader?<Loader/>:donations.length === 0 ? (
+            {loader ? <Loader /> : donations.length === 0 ? (
                 <p className="text-gray-400 text-center w-full">No history available yet!</p>
             ) : (
                 donations.map((donation) => (
@@ -92,7 +92,7 @@ function History() {
                                 onClick={() => markAsCompleted(donation._id)}
                                 className="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-2 rounded transition"
                             >
-                                Mark as Collected
+                                ✅ Mark as Collected
                             </button>
                         )}
                         <div className="text-xs text-gray-500 flex justify-between mt-4">

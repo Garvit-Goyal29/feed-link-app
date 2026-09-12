@@ -1,10 +1,13 @@
 import React from "react";
 import { motion } from 'motion/react'
 import { UserIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from "react-router-dom";
 function AfterSignIn({ user }) {
+    const navigate = useNavigate();
     const logout = () => {
-        localStorage.removeItem("token")
-        window.location.href = "/signin"
+        localStorage.removeItem("token");
+        window.dispatchEvent(new Event("tokenChange"));
+        navigate("/signin");
     }
     return (
         <>

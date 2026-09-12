@@ -25,6 +25,8 @@ function Donate() {
     const user = getUser();
     const today = new Date().toLocaleDateString();
     const [loader, setloader] = useState(false);
+    // Increment to force Current to re-fetch immediately after a request is accepted
+    const [currentRefreshKey, setCurrentRefreshKey] = useState(0);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -204,7 +206,7 @@ function Donate() {
                     </div>
                     <div className="w-full min-h-[80vh] rounded-b-xl bg-[#1e1e1e] p-[1vh]">
                         <Routes>
-                            <Route path="/current" element={<Current />} />
+                            <Route path="/current" element={<Current refreshKey={currentRefreshKey} />} />
                             <Route path="/history" element={<History />} />
                         </Routes>
                     </div>
@@ -220,7 +222,7 @@ function Donate() {
                     </button> */}
                 </div>
                 <div className='w-full h-full mt-[2vh] flex justify-center items-center'>
-                    <Request />
+                    <Request onAccepted={() => setCurrentRefreshKey(k => k + 1)} />
                 </div>
             </div>
         </>
