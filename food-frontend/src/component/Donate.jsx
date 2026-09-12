@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
