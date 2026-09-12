@@ -1,14 +1,23 @@
 import { NavLink } from "react-router-dom";
 import logo from '../assets/logo.png'
 import { motion, useScroll } from 'motion/react'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AfterSignIn from '../component/AfterSignIn.jsx'
 import { getUser } from '../utils/auth'
 import './Navbar.css'
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [obj, setObj] = useState(() => getUser());
     const ScrollYAxisProgress = useScroll().scrollYProgress;
-    const obj = getUser();
+    useEffect(() => {
+        const updateUser = () => setObj(getUser());
+        window.addEventListener("storage", updateUser);
+        window.addEventListener("tokenChange", updateUser);
+        return () => {
+            window.removeEventListener("storage", updateUser);
+            window.removeEventListener("tokenChange", updateUser);
+        };
+    }, []);
     return (
         <>
             <div className='h-[0.7vh] bg-orange-200 w-full fixed left-0 top-0 z-51'>
@@ -75,19 +84,19 @@ function Navbar() {
                 )}
                 {menuOpen && (
                     <div className="absolute top-[9.3vh] left-0 w-[50%] h-screen bg-white flex flex-col items-center gap-4 py-4 shadow-2xl lg:hidden z-100">
-                        <NavLink to="/"  onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        <NavLink to="/" onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                             Home
                         </NavLink>
-                        <NavLink to="/howitwork"  onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        <NavLink to="/howitwork" onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                             How it work
                         </NavLink>
-                        <NavLink to="/about"  onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        <NavLink to="/about" onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                             About
                         </NavLink>
-                        <NavLink to="/donate/current"  onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        <NavLink to="/donate/current" onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                             Donate
                         </NavLink>
-                        <NavLink to="/receive"  onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
+                        <NavLink to="/receive" onClick={() => setMenuOpen(false)} className={({ isActive }) => `${isActive ? "text-orange-400 hover:text-orange-400" : "text-black"} text-md duration-200 ease-out hover:text-gray-600 font-[jost]`}>
                             Receive
                         </NavLink>
                     </div>

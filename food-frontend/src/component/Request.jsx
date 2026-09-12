@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { getUser } from '../utils/auth'
 
-function Request() {
+function Request({ onAccepted }) {
     const [request, setRequest] = useState([]);
     const user = getUser();
 
@@ -30,6 +30,8 @@ function Request() {
             if (data.success) {
                 alert("Request accepted successfully ✅")
                 setRequest(prev => prev.filter(r => r._id !== id));
+                // Immediately refresh Current listing in parent
+                if (onAccepted) onAccepted();
             } else {
                 alert(data.message || "Something went wrong ❌");
             }
@@ -69,7 +71,7 @@ function Request() {
                             key={req._id}
                             className="bg-[#2a2a2a] p-4 w-[48%] rounded-xl text-white shadow"
                         >
-                            <h2 className="text-white font-bold">Name : {req.name}</h2>
+                            <h2 className="text-white font-bold">Requested by: <span className="text-orange-400">{req.receiverName || "Unknown"}</span></h2>
                             <h2 className="text-orange-400 font-semibold">
                                 Food : {req.food}
                             </h2>
@@ -94,3 +96,4 @@ function Request() {
     )
 }
 export default Request;
+

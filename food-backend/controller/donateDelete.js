@@ -8,8 +8,6 @@ const donateDelete = async (req, res) => {
         if (!donation) {
             return res.status(404).json({ success: false, message: "Donation not found" })
         }
-
-        // Only the owner can delete their own donation
         if (donation.userId.toString() !== req.user.id.toString()) {
             return res.status(403).json({ success: false, message: "Not authorized to delete this donation" })
         }

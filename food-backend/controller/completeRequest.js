@@ -2,7 +2,7 @@ import donateModel from '../model/donateModel.js'
 
 const completeRequest = async (req, res) => {
     try {
-        const { id } = req.body
+        const { id } = req.params
         const donation = await donateModel.findById(id)
 
         if (!donation) {
